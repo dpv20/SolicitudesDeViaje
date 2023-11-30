@@ -1,0 +1,46 @@
+#        elif choice == "Field Visit Form":
+#            field_visit_form()
+#
+#
+#        elif choice == "Solicitud de Viaje":
+#            if st.session_state['user_role'] == 'admin':
+#                admin_choice = st.sidebar.radio('Choose an option', ['Solicitud de viaje', 'Solicitudes pendientes', 'Listado Solicitudes Aprobadas', 'Listado de empleados','Listado de proyectos','Listado de viaticos'])
+#                if admin_choice == 'Solicitud de viaje':
+#                    solicitud(st.session_state['username'])
+#                elif admin_choice == 'Listado de empleados':
+#                    listado_empleados()
+#                elif admin_choice == 'Listado de proyectos':
+#                    listado_proyectos()
+#                elif admin_choice == 'Listado de viaticos':
+#                    listado_viaticos()
+#                elif admin_choice == 'Solicitudes pendientes':
+#                    solicitudes_pendientes()
+#                elif admin_choice == 'Listado Solicitudes Aprobadas':
+#                    solicitudes_aprobadas()
+#            else:
+#                solicitud(st.session_state['username'])
+#
+#
+#        elif choice == "Reportes-Operaciones":
+#            base_path = 'usuarios'
+#            username = st.session_state['username']
+#            template_path = os.path.join(base_path, 'template')
+#            user_folder = os.path.join(base_path, username)
+#            # Check if the folder with the username exists
+#            if not os.path.exists(user_folder):
+#                # Copy the template to the new user folder
+#                shutil.copytree(template_path, user_folder)
+#            else:
+#                pass
+#            if st.session_state['user_role'] == 'admin':
+#                admin_choice = st.sidebar.radio('Choose an option', ['MAKE A CHECKLIST','DAILY REGISTER', 'STOCK', 'EDIT GRADES', 'UPLOADING PHOTOS'])
+#                if admin_choice == 'MAKE A CHECKLIST':
+#                    make_checklist(st.session_state['username'])
+#                elif admin_choice == 'DAILY REGISTER':
+#                    pass
+#                elif admin_choice == 'STOCK':
+#                    pass
+#                elif admin_choice == 'EDIT GRADES':
+#                    pass
+#                elif admin_choice == 'UPLOADING PHOTOS':
+#                    pass

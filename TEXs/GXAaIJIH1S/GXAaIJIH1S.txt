@@ -1,0 +1,19 @@
+Project Name:   test-morethan25-1
+Decimal Separator:   ,
+Country:   Afghanistan
+Area:   0.0
+Region:   USA
+Type of Lagoon:   RE
+Language:   English
+Currency:   USD
+Maximum Lagoon Depth:   0.0
+Total Perimeter:   0.0
+Wall:   0.0
+Beach Entrance:   0.0
+Island beach entrance:   0.0
+Machine Room:   Underground
+Date:   2023/09/25
+Estado:   aprobado
+Username:   dpavez@crystal-lagoons.com
+
+Link to DWG file: https://drive.google.com/file/d/18vNylDOZ6miot4cH35CyV3UyHMy2XewT/view?usp=drivesdk

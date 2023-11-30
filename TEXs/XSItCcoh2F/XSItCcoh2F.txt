@@ -1,0 +1,17 @@
+Project Name:   1234
+Decimal Separator:   ,
+Country:   Alabama
+Area:   0.0
+Region:   USA
+Type of Lagoon:   PAL
+Language:   English
+Currency:   EUR
+Maximum Lagoon Depth:   0.0
+Total Perimeter:   0.0
+Wall:   0.0
+Beach Entrance:   0.0
+Island beach entrance:   0.0
+Machine Room:   Underground
+Date:   2023/10/06
+Estado:   aprobado
+Username:   dpavez@crystal-lagoons.com

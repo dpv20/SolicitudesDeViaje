@@ -1,0 +1,9 @@
+name,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,date_ranges
+Elías Varela,Laguna del Mar,Portada,Pirámide,Laguna Norte,Laguna Cóndores,Laguna Cóndores,,,,,,,,,,,
+Matias Orellana,San Alfonso del Mar-,Laguna Vista,Brisas de Santo Domingo,Laguna Bahía,Papudo,Las Cruces,,,,,,,,,,,
+Tomas Mora,Laguna Centro,Laguna del Sol,Solanas,La Jolla de Asia,Casa del Sol,Hacienda La Joya,Karibao,,,,,,,,,,
+Matt Mertz,Epperson Ranch,Beachwalk,Balmoral,Lago Mar,SoLe Mia,SouthShore Bay,Aqua,Windsong Ranch,,,,,,,,,
+Waldemar Vildoso,Alcazaba Lagoon,Tilal Al Ghaf,Meydan-,Drop Zone,Hua Hin-,Bintan-,Dead Sea-,Riverwalk,Onikisubat Belediyesi,Vidifi,Swan Lake 1,Swan Lake 2,Swan Lake El Gouna,Sharm El Sheik-,Bo Islands,,
+Andres Jara,Santa Rosalía,Olas De San Pedro,Playa Blanca,Terralagos,Apodaca,Veracruz,Brasil Beach Cuiabá,Lagoon Pilar,Vista Azul,Diamante,Foresta-,Blue Lagoon,Acquavillage,Mar Adentro,Playa Turquesa-,Plascencia,
+Tomas Mora,,,,,,,,,,,,,,,,,"[(datetime.date(2023, 5, 3), datetime.date(2023, 5, 5)), (datetime.date(2023, 5, 8), datetime.date(2023, 5, 8)), (datetime.date(2023, 5, 8), datetime.date(2023, 5, 8)), (datetime.date(2023, 5, 8), datetime.date(2023, 5, 8)), (datetime.date(2023, 5, 8), datetime.date(2023, 5, 8))]"
+Elías Varela,,,,,,,,,,,,,,,,,"[(datetime.date(2023, 5, 15), datetime.date(2023, 5, 17)), (datetime.date(2023, 5, 10), datetime.date(2023, 5, 24)), (datetime.date(2023, 5, 11), datetime.date(2023, 5, 19)), (datetime.date(2023, 5, 11), datetime.date(2023, 5, 25))]"
