@@ -62,7 +62,7 @@ def authenticate(username, password, users):
     return None
 
 def login_page():
-    st.title("Login Page")
+    st.title("Solicitudes De Viaje")
 
     # Initialize a flag in session state if not already present
     if 'login_attempt' not in st.session_state:

@@ -62,7 +62,7 @@ clear_all_but_first_page()
 
 users = load_users("users.csv")
 users_df = pd.read_csv("users.csv")
-
+df_empleados = pd.read_csv('datos_empleados.csv')
 def main():
     st.markdown(
         """
@@ -102,8 +102,10 @@ def main():
                     'Listado Solicitudes Aprobadas',
                     'Listado de Empleados',
                     'Listado de Proyectos',
-                    'Listado de Viáticos'
+                    'Listado de Viáticos',
+                    'Ver Mis Solicitudes'
                 ]
+                #holiwi
                 viaje_choice = st.sidebar.radio("Opciones de Viaje", viaje_options)
 
                 if viaje_choice == 'Crear Solicitud de Viaje':
@@ -118,6 +120,13 @@ def main():
                     listado_proyectos()
                 elif viaje_choice == 'Listado de Viáticos':
                     listado_viaticos()
+                elif viaje_choice == 'Ver Mis Solicitudes':
+                    # Obtener el valor del campo 'email' que coincide con st.session_state['username']
+                    filtro = df_empleados['email'] == st.session_state['username']
+                    Nombre = df_empleados.loc[filtro, 'nombre completo'].iloc[0]  # Asumiendo que solo hay una coincidencia
+                    solicitudes_por_usuario(Nombre)
+                    print(Nombre)
+                    
             else:
                 viaje_options = [
                     'Crear Solicitud de Viaje',
@@ -128,7 +137,12 @@ def main():
                 if viaje_choice == 'Crear Solicitud de Viaje':
                     solicitud(st.session_state['username'])
                 elif viaje_choice == 'Ver Mis Solicitudes':
-                    solicitudes_por_usuario(st.session_state['username'])
+                    # Obtener el valor del campo 'email' que coincide con st.session_state['username']
+                    filtro = df_empleados['email'] == st.session_state['username']
+                    Nombre = df_empleados.loc[filtro, 'nombre completo'].iloc[0]  # Asumiendo que solo hay una coincidencia
+                    solicitudes_por_usuario(Nombre)
+                    print(Nombre)
+                    
 
         elif choice == "configuraciones" and st.session_state['user_role'] == 'admin':
             admin_choice = st.sidebar.radio('Choose an option', ['Crear nuevo usuario', 'listado de usuarios', 'listado de mails'])

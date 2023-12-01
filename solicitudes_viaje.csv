@@ -1,6 +1,11 @@
 solicitud,fecha_solicitud,estado,Nombre Empleado,departamento,total_usd_viatico,fecha_partida,fecha_llegada,comentario
-
-39,2023-11-30,pendiente,Diego Pavez,Technical,0,2023-11-30,2023-11-30
-40,2023-11-30,pendiente,diego,Technical,0,2023-11-30,2023-11-30
-41,2023-11-30,pendiente,Alejandro González,Engineering,0,2023-11-30,2023-11-30
-42,2023-11-30,pendiente,Alejandro González,Engineering,0,2023-11-30,2023-11-30
+39,2023-11-30,pendiente,Diego Pavez,Technical,0,2023-11-30,2023-11-30,
+40,2023-11-30,pendiente,diego,Technical,0,2023-11-30,2023-11-30,
+41,2023-11-30,pendiente,Alejandro González,Engineering,0,2023-11-30,2023-11-30,
+42,2023-11-30,pendiente,Alejandro González,Engineering,0,2023-11-30,2023-11-30,
+45,2023-11-30,pendiente,Juan Pablo Reyes,Technical,0,2023-11-30,2023-11-30,
+46,2023-11-30,pendiente,Tomás Mora,Technical,0,2023-11-30,2023-11-30,
+47,2023-11-30,pendiente,Diego Pavez,Technical,0,2023-11-30,2023-11-30,
+48,2023-11-30,pendiente,Tomás Mora,Technical,0,2023-11-30,2023-11-30,
+49,2023-11-30,pendiente,Tomás Mora,Technical,0,2023-12-01,2023-12-08,
+50,2023-11-30,aprobado,Tomás Mora,Technical,400,2023-12-01,2023-12-08,muy bonito

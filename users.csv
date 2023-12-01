@@ -1,7 +1,7 @@
 username,password,role,position
 diego,pavez,user,director
 evarela@crystal-lagoons.com,Elias.Varela,user,empleado
-tmora@crystal-lagoons.com,Tomas.Mora,admin,empleado
+tmora@crystal-lagoons.com,Tomas.Mora,user,empleado
 jpreyes@crystal-lagoons.com,Jp.Reyes,user,empleado
 dpavez@crystal-lagoons.com,Diego.Pavez,admin,empleado
 asinclair@crystal-lagoons.com,Alastair.Sinclair,user,director
