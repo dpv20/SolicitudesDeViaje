@@ -55,6 +55,10 @@ if 'user_role' not in st.session_state:
 if 'user_position' not in st.session_state:
     st.session_state['user_position'] = ""
 
+if 'area' not in st.session_state:
+    st.session_state['area'] = ""
+
+
 DEFAULT_PAGE = "Login.py"
 st.write('-----')
 
@@ -82,11 +86,15 @@ def main():
         user_position = None
         if st.session_state['username'] in users_df['username'].values:
             user_position = users_df[users_df['username'] == st.session_state['username']]['position'].iloc[0]
+            user_area = users_df[users_df['username'] == st.session_state['username']]['area'].iloc[0]
+
 
         if st.session_state['user_role'] == 'admin':
             menu_options = ["homepage", "Solicitud de Viaje", "configuraciones"]
         elif user_position == 'director':
             menu_options = ["homepage", "Solicitud de Viaje", "Solicitudes Area"]
+        elif user_area == 'Secretary':
+            menu_options = ["homepage", "Solicitud de Viaje", "configuraciones"]
         else:
             menu_options = ["homepage", "Solicitud de Viaje"]
 
@@ -109,7 +117,7 @@ def main():
                 viaje_choice = st.sidebar.radio("Opciones de Viaje", viaje_options)
 
                 if viaje_choice == 'Crear Solicitud de Viaje':
-                    solicitud(st.session_state['username'])
+                    solicitud(st.session_state['username'],user_area)
                 elif viaje_choice == 'Solicitudes Pendientes':
                     solicitudes_pendientes()
                 elif viaje_choice == 'Listado Solicitudes Aprobadas':
@@ -125,8 +133,34 @@ def main():
                     filtro = df_empleados['email'] == st.session_state['username']
                     Nombre = df_empleados.loc[filtro, 'nombre completo'].iloc[0]  # Asumiendo que solo hay una coincidencia
                     solicitudes_por_usuario(Nombre)
-                    print(Nombre)
-                    
+                    #print(Nombre)
+            elif user_area == 'Secretary':
+                viaje_options = [
+                    'Listado Solicitudes Aprobadas',
+                    'Crear Solicitud de Viaje',
+                    'Listado de Empleados',
+                    'Listado de Proyectos',
+                    'Listado de Viáticos',
+                    'Solicitudes Pendientes',
+                    'Ver Mis Solicitudes'
+                ]
+                viaje_choice = st.sidebar.radio("Opciones de Viaje", viaje_options)
+                if viaje_choice == 'Crear Solicitud de Viaje':
+                    solicitud(st.session_state['username'], user_area)
+                elif viaje_choice == 'Listado Solicitudes Aprobadas':
+                    solicitudes_aprobadas()
+                elif viaje_choice == 'Listado de Empleados':
+                    listado_empleados()
+                elif viaje_choice == 'Listado de Proyectos':
+                    listado_proyectos()
+                elif viaje_choice == 'Listado de Viáticos':
+                    listado_viaticos()
+                elif viaje_choice == 'Solicitudes Pendientes':
+                    solicitudes_pendientes()
+                elif viaje_choice == 'Ver Mis Solicitudes':
+                    filtro = df_empleados['email'] == st.session_state['username']
+                    Nombre = df_empleados.loc[filtro, 'nombre completo'].iloc[0]  # Asumiendo que solo hay una coincidencia
+                    solicitudes_por_usuario(Nombre)
             else:
                 viaje_options = [
                     'Crear Solicitud de Viaje',
@@ -135,13 +169,13 @@ def main():
                 viaje_choice = st.sidebar.radio("Opciones de Viaje", viaje_options)
 
                 if viaje_choice == 'Crear Solicitud de Viaje':
-                    solicitud(st.session_state['username'])
+                    solicitud(st.session_state['username'], user_area)
                 elif viaje_choice == 'Ver Mis Solicitudes':
                     # Obtener el valor del campo 'email' que coincide con st.session_state['username']
                     filtro = df_empleados['email'] == st.session_state['username']
                     Nombre = df_empleados.loc[filtro, 'nombre completo'].iloc[0]  # Asumiendo que solo hay una coincidencia
                     solicitudes_por_usuario(Nombre)
-                    print(Nombre)
+                    #print(Nombre)
                     
 
         elif choice == "configuraciones" and st.session_state['user_role'] == 'admin':
@@ -164,8 +198,10 @@ def main():
                 # Update st.session_state based on the selection
                 if user_position == "Operaciones":
                     st.session_state['user_position'] = "Technical"
+                    st.session_state['area'] = "Technical"
                 elif user_position == "Ingeniería":
                     st.session_state['user_position'] = "Engineering"
+                    st.session_state['area'] = "Engineering"
 
             solicitudes_de_area(st.session_state['username'])
     

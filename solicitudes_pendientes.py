@@ -1,22 +1,32 @@
 import pandas as pd
 import streamlit as st
-from PyPDF2 import PdfFileReader
 from pdf2image import convert_from_path
 import base64
 import os
+import datetime 
+
 
 def solicitudes_pendientes():
     st.title("Solicitudes de Viaje Pendientes")
     
-    # Leer el archivo CSV
-    # Asegurarse de que las fechas se lean correctamente
-    df_solicitudes = pd.read_csv("solicitudes_viaje.csv", parse_dates=['fecha_solicitud'], dayfirst=True)
-    
+    # Leer el archivo CSV y asegurarse de que las fechas se lean correctamente
+    #df_original = pd.read_csv("solicitudes_viaje.csv", parse_dates=['fecha_solicitud'], dayfirst=True)
+
+    df_original = pd.read_csv("solicitudes_viaje.csv")
+    df_original['fecha_solicitud'] = pd.to_datetime(df_original['fecha_solicitud'])
+    df_original['fecha_partida'] = pd.to_datetime(df_original['fecha_partida'])
+    df_original['fecha_llegada'] = pd.to_datetime(df_original['fecha_llegada'])
+
+
+
     # Si no hay una columna de comentario, agrégala
-    if 'comentario' not in df_solicitudes.columns:
-        df_solicitudes['comentario'] = ''
-    
+    if 'comentario' not in df_original.columns:
+        df_original['comentario'] = ''
+
+    # Trabajar con una copia para las solicitudes pendientes
+    df_solicitudes = df_original.copy()
     df_solicitudes = df_solicitudes.iloc[::-1]
+    df_solicitudes = df_solicitudes[df_solicitudes['estado'] == 'pendiente']
 
     # Mostrar los nombres de las columnas
     header_cols = st.columns([2, 2, 3, 2, 2])
@@ -40,9 +50,8 @@ def solicitudes_pendientes():
         cols[2].write(f"Solicitud número {numero}")
         cols[3].write(estado)
         
-        select_button = cols[-1].button("Seleccionar", key=str(solicitud))
+        select_button = cols[-1].button("Select", key=str(solicitud))
         if select_button:
-            selected_solicitud = solicitud
             st.session_state['selected_solicitud'] = solicitud
         st.write("---")
     
@@ -51,10 +60,8 @@ def solicitudes_pendientes():
     # Manejar la solicitud seleccionada
     if 'selected_solicitud' in st.session_state:
         selected_solicitud = st.session_state['selected_solicitud']
-        fecha_selected_solicitud = df_solicitudes.loc[df_solicitudes['solicitud'] == selected_solicitud, 'fecha_solicitud'].iloc[0]
-        # Construir el nombre del archivo en el formato YYYYMMDD_solicitud
+        fecha_selected_solicitud = df_original.loc[df_original['solicitud'] == selected_solicitud, 'fecha_solicitud'].iloc[0]
         solicitud_filename = f"{fecha_selected_solicitud.strftime('%Y%m%d')}_{selected_solicitud}"
-
 
         # Mostrar el PDF asociado
         pdf_path = os.path.join('formularios_viaje', f"{solicitud_filename}.pdf")
@@ -75,36 +82,24 @@ def solicitudes_pendientes():
         else:
             st.error("Error al descargar el archivo Excel.")
 
+        # Función para alternar la visualización de la imagen
         def toggle_image_display():
-            if f'show_image_{selected_solicitud}' in st.session_state:
-                st.session_state[f'show_image_{selected_solicitud}'] = not st.session_state[f'show_image_{selected_solicitud}']
+            key = f'show_image_{selected_solicitud}'
+            if key in st.session_state:
+                st.session_state[key] = not st.session_state[key]
             else:
-                st.session_state[f'show_image_{selected_solicitud}'] = True
-
-
+                st.session_state[key] = True
 
         # Botón para visualizar la imagen (manejo para .png y .jpg)
         img_path_png = os.path.join('formularios_viaje', f"{solicitud_filename}.png")
         img_path_jpg = os.path.join('formularios_viaje', f"{solicitud_filename}.jpg")
         
-        if os.path.exists(img_path_png):
-            img_path = img_path_png
-        elif os.path.exists(img_path_jpg):
-            img_path = img_path_jpg
-        else:
-            img_path = None
-
-        if img_path:
+        if os.path.exists(img_path_png) or os.path.exists(img_path_jpg):
+            img_path = img_path_png if os.path.exists(img_path_png) else img_path_jpg
             toggle_button = st.button("Mostrar/Ocultar Imagen", key=f'toggle_image_{selected_solicitud}', on_click=toggle_image_display)
             
-            if f'show_image_{selected_solicitud}' in st.session_state and st.session_state[f'show_image_{selected_solicitud}']:
+            if st.session_state.get(f'show_image_{selected_solicitud}', False):
                 st.image(img_path, width=500)
-                
-            #href_img = f'<a href="{img_path}" target="_blank">Ver Imagen</a>'
-            #st.markdown(href_img, unsafe_allow_html=True)
-        else:
-            pass
-            #st.error("Error al mostrar la imagen.")
 
         # Comentario y botones de Aprobar y Rechazar
         comentario = st.text_input("Dejar comentario (opcional):")
@@ -112,16 +107,13 @@ def solicitudes_pendientes():
         reject_button = st.button(f"Rechazar")
 
         if approve_button or reject_button:
-            if approve_button:
-                new_status = 'aprobado'
-            else:
-                new_status = 'rechazado'
+            new_status = 'aprobado' if approve_button else 'rechazado'
 
-            # Actualizar el estado y el comentario en el DataFrame
-            df_solicitudes.loc[df_solicitudes['solicitud'] == selected_solicitud, 'estado'] = new_status
-            df_solicitudes.loc[df_solicitudes['solicitud'] == selected_solicitud, 'comentario'] = comentario
+            # Actualizar el estado y el comentario en el DataFrame original
+            df_original.loc[df_original['solicitud'] == selected_solicitud, 'estado'] = new_status
+            df_original.loc[df_original['solicitud'] == selected_solicitud, 'comentario'] = comentario
 
-            # Guardar el DataFrame actualizado en el archivo CSV
-            df_solicitudes.to_csv("solicitudes_viaje.csv", index=False)
+            # Guardar el DataFrame original actualizado en el archivo CSV
+            df_original.to_csv("solicitudes_viaje.csv", index=False)
             st.success(f"Solicitud {selected_solicitud} ha sido {new_status}.")
 

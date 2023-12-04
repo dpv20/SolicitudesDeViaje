@@ -17,6 +17,7 @@ from PyPDF2 import PdfFileWriter, PdfFileReader, PdfWriter, PdfReader
 from reportlab.pdfgen import canvas
 import csv
 
+from send_mail import *
 
 def save_range_to_pdf(sheet, range_start, range_end, pdf_writer, wb):
     ws = wb.Worksheets(sheet)
@@ -194,7 +195,7 @@ def update_excel_file(respuesta, numeronombre):
     workbook.save(save_path)
 
 
-def solicitud(usuario):
+def solicitud(usuario, area):
     st.title('Solicitud de Viaje')
     st.write(f"{usuario}")
 
@@ -274,7 +275,7 @@ def solicitud(usuario):
     file_path_txt = 'formularios_viaje/numero_sol_viaje.txt'
     csv_path = 'solicitudes_viaje.csv'
     
-    print(f"Ruta del archivo: {file_path_txt}")
+    #print(f"Ruta del archivo: {file_path_txt}")
 
     if st.button('Enviar'):
         numeronombre = increment_number_in_file(file_path_txt)
@@ -283,6 +284,8 @@ def solicitud(usuario):
         print(fecha_solicitud)
         if uploaded_image:
             image_save_path = os.path.join('formularios_viaje', f"{datetime.now().strftime('%Y%m%d')}_{numeronombre}.png")
+            saved_path_name = f"{datetime.now().strftime('%Y%m%d')}_{numeronombre}"
+            print(saved_path_name)
             with open(image_save_path, 'wb') as image_file:
                 image_file.write(uploaded_image.read())
             st.write(f'Imagen guardada en: {image_save_path}')
@@ -315,6 +318,10 @@ def solicitud(usuario):
             fecha_llegada = respuesta['trayectos'][-1]['fecha_llegada'].strftime('%Y-%m-%d') if respuesta['trayectos'] else ''
             writer.writerow([nombre_solicitud, fecha_solicitud,'pendiente', nombre_empleado, departamento, total_usd_viatico, fecha_partida, fecha_llegada])
 
+        if area == "Technical":
+            area = "Engineering"
+
+        send_travel_request(usuario, nombre_empleado, area, saved_path_name)
 
         st.write(respuesta)
         

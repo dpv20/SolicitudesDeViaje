@@ -51,7 +51,8 @@ def load_users(file):
         users[row['username']] = {
             'password': row['password'],
             'role': row['role'],
-            'position':row['position']
+            'position':row['position'],
+            'area':row['area']
         }
     return users
 
@@ -87,40 +88,47 @@ def login_page():
 
 
 
-def create_user(username, password, role, position):
+def create_user(username, password, role, position, area):
+
     users[username] = {
         'password': password,
         'role': role,
-        'position': position
+        'position': position,
+        'area': area
     }
     # Save new user to the CSV file
-    new_user = pd.DataFrame([[username, password, role, position]], columns=['username', 'password', 'role', 'position'])
+    new_user = pd.DataFrame([[username, password, role, position, area]], columns=['username', 'password', 'role', 'position', 'area'])
     new_user.to_csv("users.csv", mode='a', header=False, index=False)
 
 def nuevo_usuario():
-    #st.title("Admin Page")
+    departments = [
+        'Administration', 'Architecture', 'Commercial', 'Comptroller', 'Development',
+        'Engineering', 'F&A', 'HR', 'IT', 'Legal', 'Management', 'Marketing', 
+        'R&D', 'Technical', 'Water']
+
     st.title("Crear nuevo usuario")
     new_username = st.text_input("New username")
     new_password = st.text_input("New password", type="password")
     new_role = st.selectbox("Role", ["user", "admin"])
-    new_position = st.selectbox("Role", ["empleado", "director"])
+    new_position = st.selectbox("Position", ["empleado", "director"])
+    new_area = st.selectbox("Area", departments)  # Dropdown for selecting the department
 
     if st.button("Create user"):
-        create_user(new_username, new_password, new_role, new_position)
+        create_user(new_username, new_password, new_role, new_position, new_area)
         st.success(f"User {new_username} created")
-        st.success(f"password: \"{new_password}\"")
-        st.success(f"role: {new_role}")
-        st.success(f"role: {new_position}")
+        st.success(f"Password: \"{new_password}\"")
+        st.success(f"Role: {new_role}")
+        st.success(f"Position: {new_position}")
+        st.success(f"Area: {new_area}")
 
 def display_grid(users):
     # Display users as a grid
     st.write("<h2>Users</h2>", unsafe_allow_html=True)
-    data = pd.DataFrame.from_dict(users, orient='index', columns=['password', 'role','position'])
+    data = pd.DataFrame.from_dict(users, orient='index', columns=['password', 'role', 'position', 'area'])
     data.index.name = 'Username'
     st.write(data)
 
 def display_users(users, file):
-    #st.title("Users config")
     # Display user grid
     display_grid(users)
 
@@ -134,20 +142,20 @@ def display_users(users, file):
                 # Remove user from dictionary
                 del users[delete_username]
                 # Update CSV file
-                data = pd.DataFrame.from_dict(users, orient='index', columns=['password', 'role','position'])
+                data = pd.DataFrame.from_dict(users, orient='index', columns=['password', 'role', 'position', 'area'])
                 data.index.name = 'username'
                 data.to_csv(file, index_label='username')
                 # Show success message
                 st.success(f"User {delete_username} deleted successfully.")
-                # Update user grid
             else:
                 st.error("Invalid password.")
         else:
             st.error(f"User {delete_username} not found.")
 
 def save_users(users):
-    data = pd.DataFrame([(username, info['password'], info['role']) for username, info in users.items()],
-                        columns=['username', 'password', 'role'])
+    data = pd.DataFrame([(username, info['password'], info['role'], info['position'], info['area']) 
+                         for username, info in users.items()],
+                        columns=['username', 'password', 'role', 'position', 'area'])
     data.to_csv("users.csv", mode='w', header=True, index=False)
 '''
 def calculate_machine_rooms(area):
