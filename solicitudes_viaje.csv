@@ -1,4 +1,10 @@
 solicitud,fecha_solicitud,estado,Nombre Empleado,departamento,total_usd_viatico,fecha_partida,fecha_llegada,comentario
+66,2023-12-11,anulado,Andrea Elicer,Administration,250,2023-12-11,2023-12-18,
+65,2023-12-11,rechazado,Diego Pavez,Technical,0,2023-12-11,2023-12-14,
+64,2023-12-11,rechazado,Alejandro González,Ingeniería,0,2023-12-11,2023-12-11,
+63,2023-12-11,anulado,Andrea Elicer,Administration,0,2023-12-11,2023-12-11,
+62,2023-12-11,anulado,Andrea Elicer,Administration,0,2023-12-20,2023-12-23,
+61,2023-12-11,anulado,Andrea Elicer,Administration,0,2023-12-20,2023-12-23,
 60,2023-12-04,aprobado,Tomás Mora,Technical,0,2023-12-04,2023-12-04,1234
 59,2023-12-04,aprobado,Diego Pavez,Technical,0,2023-12-04,2023-12-04,111
 58,2023-12-04,aprobado,Diego Pavez,Technical,0,2023-12-04,2023-12-04,joojoj
@@ -17,3 +23,4 @@ solicitud,fecha_solicitud,estado,Nombre Empleado,departamento,total_usd_viatico,
 41,2023-11-30,rechazado,Alejandro González,Engineering,0,2023-11-30,2023-11-30,asdasd
 40,2023-11-30,rechazado,diego,Technical,0,2023-11-30,2023-11-30,1111
 39,2023-11-30,aprobado,Diego Pavez,Technical,0,2023-11-30,2023-11-30,asdasd
+67,2023-12-11,pendiente,Andrea Elicer,Administration,0,2023-12-11,2023-12-19

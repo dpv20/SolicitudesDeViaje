@@ -34,59 +34,6 @@ def save_range_to_pdf(sheet, range_start, range_end, pdf_writer, wb):
     os.remove(pdf_path)
 
 
-''' #con imagen el PDF
-def create_pdf_with_image_and_excel(numeronombre):
-    pythoncom.CoInitialize()
-
-    date_str = datetime.now().strftime('%Y%m%d')
-    excel_path = os.path.join('formularios_viaje', f"{date_str}_{numeronombre}.xlsx")
-    image_path = os.path.join('formularios_viaje', f"{date_str}_{numeronombre}.png")
-    pdf_path = os.path.join('formularios_viaje', f"{date_str}_{numeronombre}.pdf")
-
-    # Create a new PDF writer
-    pdf_writer = PdfWriter()
-
-    # Handle the Excel output
-    excel = win32.gencache.EnsureDispatch('Excel.Application')
-    excel.Visible = False
-    excel.DisplayAlerts = False
-    wb = excel.Workbooks.Open(os.path.abspath(excel_path))
-
-    # Call the save_range_to_pdf function for the desired range
-    save_range_to_pdf('Solicitud de Viaje', 'A1', 'K49', pdf_writer, wb)
-
-    # Close the workbook
-    wb.Close()
-
-    # Add the image if it exists
-    if os.path.exists(image_path):
-        original_image = Image.open(image_path)
-        temp_image_path = tempfile.mktemp(suffix=".pdf")
-        
-        # Create a new PDF with the dimensions of the image
-        c = canvas.Canvas(temp_image_path, pagesize=(original_image.width, original_image.height))
-        c.drawImage(image_path, 0, 0, original_image.width, original_image.height)
-        c.save()
-        original_image.close()
-        
-        with open(temp_image_path, 'rb') as input_file:
-            pdf_reader = PdfReader(input_file)
-            for page in pdf_reader.pages:
-                pdf_writer.add_page(page)
-        os.remove(temp_image_path)
-
-    # Then save your PDF
-    with open(pdf_path, 'wb') as output_pdf:
-        pdf_writer.write(output_pdf)
-
-    # Remove original Excel and image files
-    #os.remove(excel_path)
-    if os.path.exists(image_path):
-        #os.remove(image_path)
-        pass
-'''
-
-
 def create_pdf_with_image_and_excel(numeronombre): #sin imagen el pdf
     pythoncom.CoInitialize()
 
@@ -282,6 +229,7 @@ def solicitud(usuario, area):
         nombre_solicitud = numeronombre
         fecha_solicitud = f"{datetime.now().strftime('%Y-%m-%d')}"
         print(fecha_solicitud)
+        saved_path_name = f"{datetime.now().strftime('%Y%m%d')}_{numeronombre}"
         if uploaded_image:
             image_save_path = os.path.join('formularios_viaje', f"{datetime.now().strftime('%Y%m%d')}_{numeronombre}.png")
             saved_path_name = f"{datetime.now().strftime('%Y%m%d')}_{numeronombre}"

@@ -43,6 +43,9 @@ from make_checklist import *
 from solicitudes_por_usuario import *
 from solicitudes_de_area import *
 
+#######################################################
+from extras.simcards import *
+
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
 
@@ -97,6 +100,8 @@ def main():
             menu_options = ["homepage", "Solicitud de Viaje", "configuraciones"]
         else:
             menu_options = ["homepage", "Solicitud de Viaje"]
+        if st.session_state['username'] == 'tmora@crystal-lagoons.com' or st.session_state['username'] == 'dpavez@crystal-lagoons.com':
+            menu_options.append("SIM CARDS")
 
         choice = st.sidebar.selectbox("Menu", menu_options)
 
@@ -204,6 +209,13 @@ def main():
                     st.session_state['area'] = "Engineering"
 
             solicitudes_de_area(st.session_state['username'])
+        elif choice == "SIM CARDS":
+            choice = st.sidebar.radio("Choose an option", ("Enviar mensaje", "Listado de SIM"))
+            if choice == "Enviar mensaje":
+                simcards()
+            elif choice == "Listado de SIM":
+                newsimcard()
+
     
     else:
         login_page()
